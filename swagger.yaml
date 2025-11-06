@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: API CRUD Kosmetik
+  description: |
+    Endpoint untuk melakukan operasi CRUD pada data **Kosmetik**.
+    Database: `db_kosmetik`, Tabel: `produk`.
+    Dibuat oleh **Silvi Puspitasari**.
+  version: 1.0.0
+servers:
+  - url: http://localhost/api_kosmetik
+    description: Localhost server
+paths:
+  /produk.php:
+    get:
+      summary: Ambil semua data produk
+      description: Mengambil semua data produk dari tabel `produk`.
+      responses:
+        '200':
+          description: Daftar semua data produk
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Produk'
+    post:
+      summary: Tambah produk baru
+      description: Menambahkan produk baru ke tabel `produk`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdukInput'
+      responses:
+        '200':
+          description: Data berhasil ditambahkan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+  /produk.php/{id}:
+    get:
+      summary: Ambil data produk berdasarkan ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Data produk berdasarkan ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Produk'
+    put:
+      summary: Ubah data produk berdasarkan ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProdukInput'
+      responses:
+        '200':
+          description: Data berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+    delete:
+      summary: Hapus data produk berdasarkan ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Data berhasil dihapus
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+components:
+  schemas:
+    Produk:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nama_produk:
+          type: string
+          example: "Glow B-Bomb Serum"
+        merk:
+          type: string
+          example: "Somethinc"
+        kategori:
+          type: string
+          example: "Serum"
+        harga:
+          type: integer
+          example: 135000
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ProdukInput:
+      type: object
+      properties:
+        nama_produk:
+          type: string
+          example: "Glow B-Bomb Serum"
+        merk:
+          type: string
+          example: "Somethinc"
+        kategori:
+          type: string
+          example: "Serum"
+        harga:
+          type: integer
+          example: 135000
